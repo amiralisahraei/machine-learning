@@ -22,10 +22,6 @@ data = pd.read_csv(data_path)
 # data_information = data.info()
 # print(data_information)
 
-# Data describtion
-# data_desciption = data.describe()
-# print(data_desciption)
-
 # Delete useless columns
 data.drop("Unnamed: 32", axis=1, inplace=True)
 data.drop("id", axis=1, inplace=True)
@@ -45,14 +41,6 @@ for col in X.columns:
     for index, x in X[col].items():
         if not isinstance(x, float):
             print(f"There is a non-float value in columns: {col} at index: {index}")
-
-
-# Correlatio between columns
-# print(X.corr())
-
-# Plot the relationship between few columns
-# sns.pairplto(data[['radius_mean', 'area_worst', 'smoothness_worst']], corner=True)
-# plt.show()
 
 
 # Train and Test split
@@ -76,10 +64,10 @@ def distribution_plot(Y_train, Y_test):
 
     plt.show()
 
+# distribution_plot(Y_train, Y_test)
+
 
 X_train, X_test, Y_train, Y_test = test_train_split_data(X, Y, 0.2)
-
-# distribution_plot(Y_train, Y_test)
 
 X_train = normalization_data(X_train)
 X_test = normalization_data(X_test)

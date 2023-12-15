@@ -2,9 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-# Show the scores on the top of the  bars
-
-
 def subplot_models(
     list_of_models, list_of_vlaues, list_of_y_labels, list_of_titles, colors, bar_width
 ):
