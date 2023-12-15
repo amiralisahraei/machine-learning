@@ -1,19 +1,19 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
 from models import (
     decision_tree_model,
     svm_model,
     logistic_regression_model,
     knn_model,
-    models_accuracy_score,
+    models_score,
     Nural_Networl_func,
-    xgboost_model
+    xgboost_model,
 )
 from pre_processing import normalization_data, onehot_encoding
-from plots import models_evaluation_measures
+from plots import plot_models_evaluation
 
 data_path = "/home/amirali/Amirali/Practice_Python/Breast_cancer_diagnosis/Breast_cancer_data.csv"
 data = pd.read_csv(data_path)
@@ -64,31 +64,60 @@ def distribution_plot(Y_train, Y_test):
 
     plt.show()
 
-# distribution_plot(Y_train, Y_test)
+
+def train_models_and_evaluate(X, Y, balancing):
+    X_train, X_test, Y_train, Y_test = test_train_split_data(X, Y, 0.2)
+
+    if balancing:
+        X_train, Y_train = SMOTE().fit_resample(X_train, Y_train)
+
+    X_train = normalization_data(X_train)
+    X_test = normalization_data(X_test)
+
+    Y_train = onehot_encoding(Y_train)
+    Y_test = onehot_encoding(Y_test)
+
+    models_list = [
+        decision_tree_model,
+        svm_model,
+        logistic_regression_model,
+        knn_model,
+        xgboost_model,
+        Nural_Networl_func,
+    ]
+
+    measure_values = models_score(models_list, X_train, Y_train, X_test, Y_test)
+
+    return measure_values
 
 
-X_train, X_test, Y_train, Y_test = test_train_split_data(X, Y, 0.2)
+# Imbalanced Dataset
+measure_values = train_models_and_evaluate(X, Y, False)
 
-X_train = normalization_data(X_train)
-X_test = normalization_data(X_test)
-
-Y_train = onehot_encoding(Y_train)
-Y_test = onehot_encoding(Y_test)
+# Balanced Dataset
+measure_values2 = train_models_and_evaluate(X, Y, True)
 
 
-models_list = {
-    "decision_tree": decision_tree_model,
-    "SVM": svm_model,
-    "Logistic_Regression": logistic_regression_model,
-    "KNN": knn_model,
-    "XGBoost": xgboost_model,
-    "Neural Network": Nural_Networl_func,
-}
-accuracy_list, precision_list, recall_list, f1_list = models_accuracy_score(
-    models_list, X_train, Y_train, X_test, Y_test
+# Merge the measures resulted from Imbalanced and Balanced dataset
+def merge_arrays(measure_values, measure_values2):
+    list_of_measures = []
+    for i in range(len(measure_values)):
+        merged_array = np.stack((measure_values[i], measure_values2[i]))
+        list_of_measures.append(merged_array)
+
+    list_of_measures = np.array(list_of_measures)
+
+    return list_of_measures
+
+
+measure_values = merge_arrays(measure_values, measure_values2)
+
+
+list_of_models = np.array(
+    ["decision_tree", "SVM", "Logistic_Regression", "KNN", "XGBoost", "Neural Network"]
 )
+y_labels = ["roc_auc_score", "precision_score", "recall_score", "f1_score"]
+titles = ["ROC_AUC", "Precision", "Recall", "F1"]
 
-# Plot evaluation measures
-models_evaluation_measures(accuracy_list, precision_list, recall_list, f1_list)
 
-
+plot_models_evaluation(list_of_models, measure_values, titles, y_labels, 0.35)

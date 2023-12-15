@@ -1,9 +1,15 @@
+import numpy as np
 from xgboost import XGBClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import svm
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import (
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+)
 import tensorflow as tf
 from keras import models, layers
 
@@ -69,7 +75,6 @@ def Nural_Networl_func(X_train, Y_train):
     return neural_network_model
 
 
-
 # Model prediction
 def model_prediction(model_name, X_train, Y_train, X_test, Y_test):
     model = model_name(X_train, Y_train)
@@ -77,28 +82,30 @@ def model_prediction(model_name, X_train, Y_train, X_test, Y_test):
     # Bcause the output of Neural Network is not 1 or 0 we need to convert it to a binary array
     predicted_labels = (predicted_labels > 0.5).astype("int")
 
-    accuracy_value = accuracy_score(Y_test, predicted_labels)
+    roc_auc_value = roc_auc_score(Y_test, predicted_labels)
     precision_value = precision_score(Y_test, predicted_labels)
     recall_value = recall_score(Y_test, predicted_labels)
     f1_value = f1_score(Y_test, predicted_labels)
 
-    return accuracy_value, precision_value, recall_value, f1_value
+    return roc_auc_value, precision_value, recall_value, f1_value
 
 
-# Accuracy score for different models
-def models_accuracy_score(models_list, X_train, Y_train, X_test, Y_test):
-    accuracy_vlaues = {}
-    precision_values = {}
-    recall_values = {}
-    f1_values = {}
-    for model_name, model_func in models_list.items():
-        accuracy, precision, recall, f1 = model_prediction(
+# Count evaluation measures for different models
+def models_score(models_list, X_train, Y_train, X_test, Y_test):
+    roc_auc_values = []
+    precision_values = []
+    recall_values = []
+    f1_values = []
+    for model_func in models_list:
+        roc_auc, precision, recall, f1 = model_prediction(
             model_func, X_train, Y_train, X_test, Y_test
         )
 
-        accuracy_vlaues[model_name] = accuracy
-        precision_values[model_name] = precision
-        recall_values[model_name] = recall
-        f1_values[model_name] = f1
+        roc_auc_values = np.append(roc_auc_values, np.around(roc_auc, 2))
+        precision_values = np.append(precision_values, np.around(precision, 2))
+        recall_values = np.append(recall_values, np.around(recall, 2))
+        f1_values = np.append(f1_values, np.around(f1, 2))
 
-    return accuracy_vlaues, precision_values, recall_values, f1_values
+    result = np.stack((roc_auc_values, precision_values, recall_values, f1_values))
+
+    return result
