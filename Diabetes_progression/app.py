@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+from sklearn.inspection import partial_dependence
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_diabetes
 from sklearn.preprocessing import MinMaxScaler
@@ -14,7 +14,7 @@ from models import (
     polynomial_regression_model,
     random_forest_regression_model,
 )
-from plots import model_plots
+from plots import model_plots, plot_coefficients_linear_regression
 
 # Read dataset
 dataset = load_diabetes()
@@ -68,4 +68,12 @@ mean_sqaure_vlaues, mean_absolute_values = models_evaluation(
     models_list, X_train, Y_train, X_test, Y_test
 )
 
-model_plots(mean_sqaure_vlaues, mean_absolute_values)
+# Plot MSE and MAE for different models, also plot coefficient magnitudes for Linear regression
+model_plots(
+    mean_sqaure_vlaues,
+    mean_absolute_values,
+    linear_regression_model,
+    X_train,
+    Y_train,
+    dataset_features,
+)
