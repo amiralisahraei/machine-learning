@@ -14,6 +14,9 @@ The result of the project is comparing the evelaution measures including **Mean 
 # Result
 **Linear regression** model outperformed it's counterparts in MSE and MAE.
 
+![Alt Text](images/regression_result.png)
+
+
 ## Run The Project
 
 To run the project, run the following command
