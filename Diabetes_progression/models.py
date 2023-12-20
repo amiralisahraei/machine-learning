@@ -79,7 +79,7 @@ def models_evaluation(models_list, X_train, y_train, X_test, y_test):
         mse_score = np.around(mse_score, 3)
         mse_scores[model_name] = mse_score
 
-        mae_score = mean_absolute_error(y_test, predicted_labels)
+        mae_score = mean_squared_error(y_test, predicted_labels)
         mae_score = np.around(mae_score, 3)
         mae_scores[model_name] = mae_score
 
