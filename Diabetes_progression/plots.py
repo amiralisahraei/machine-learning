@@ -9,9 +9,9 @@ def add_text(y, fontdict):
 
 
 def plot_coefficients_linear_regression(
-    linear_regression_model, X_train, Y_train, feature_names
+    linear_regression_model, X_train, y_train, feature_names
 ):
-    regression_model = linear_regression_model(X_train, Y_train)
+    regression_model = linear_regression_model(X_train, y_train)
     coefficients = regression_model.coef_
 
     coefficients = np.around(coefficients, 3)
@@ -26,7 +26,7 @@ def plot_coefficients_linear_regression(
 
 
 def model_plots(
-    mse_values, mae_values, linear_regression_model, X_train, Y_train, feature_names
+    mse_values, mae_values, linear_regression_model, X_train, y_train, feature_names
 ):
     models_list = list(mse_values.keys())
 
@@ -64,7 +64,7 @@ def model_plots(
 
     plt.subplot(2, 1, 2)
     plot_coefficients_linear_regression(
-        linear_regression_model, X_train, Y_train, feature_names
+        linear_regression_model, X_train, y_train, feature_names
     )
 
     plt.show()

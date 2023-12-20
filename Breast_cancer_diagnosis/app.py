@@ -45,37 +45,37 @@ for col in X.columns:
 
 # Train and Test split
 def test_train_split_data(X, y, testSize):
-    X_train, X_test, Y_train, Y_test = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=testSize, random_state=42, shuffle=True
     )
 
-    return X_train, X_test, Y_train, Y_test
+    return X_train, X_test, y_train, y_test
 
 
 # Plot distribution of Labels (M, B) in train and test data
-def distribution_plot(Y_train, Y_test):
+def distribution_plot(y_train, y_test):
     plt.subplot(1, 2, 1)
-    plt.hist(Y_train)
+    plt.hist(y_train)
     plt.title("Train Labels")
 
     plt.subplot(1, 2, 2)
-    plt.hist(Y_test)
+    plt.hist(y_test)
     plt.title("Test Labels")
 
     plt.show()
 
 
 def train_models_and_evaluate(X, y, balancing):
-    X_train, X_test, Y_train, Y_test = test_train_split_data(X, y, 0.2)
+    X_train, X_test, y_train, y_test = test_train_split_data(X, y, 0.2)
 
     if balancing:
-        X_train, Y_train = SMOTE().fit_resample(X_train, Y_train)
+        X_train, y_train = SMOTE().fit_resample(X_train, y_train)
 
     X_train = normalization_data(X_train)
     X_test = normalization_data(X_test)
 
-    Y_train = onehot_encoding(Y_train)
-    Y_test = onehot_encoding(Y_test)
+    y_train = onehot_encoding(y_train)
+    y_test = onehot_encoding(y_test)
 
     models_list = [
         decision_tree_model,
@@ -86,7 +86,7 @@ def train_models_and_evaluate(X, y, balancing):
         Nural_Networl_func,
     ]
 
-    measure_values = models_score(models_list, X_train, Y_train, X_test, Y_test)
+    measure_values = models_score(models_list, X_train, y_train, X_test, y_test)
 
     return measure_values
 

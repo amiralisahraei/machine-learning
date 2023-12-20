@@ -49,7 +49,7 @@ X = data.iloc[:, 0:-1]
 y = data.iloc[:, -1]
 
 # Train test split
-X_train, X_test, Y_train, Y_test = train_test_split(
+X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
@@ -65,7 +65,7 @@ models_list = {
 
 
 mean_sqaure_vlaues, mean_absolute_values = models_evaluation(
-    models_list, X_train, Y_train, X_test, Y_test
+    models_list, X_train, y_train, X_test, y_test
 )
 
 # Plot MSE and MAE for different models, also plot coefficient magnitudes for Linear regression
@@ -74,6 +74,6 @@ model_plots(
     mean_absolute_values,
     linear_regression_model,
     X_train,
-    Y_train,
+    y_train,
     dataset_features,
 )
