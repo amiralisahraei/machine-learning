@@ -19,7 +19,7 @@ from plots import model_plots, plot_coefficients_linear_regression
 # Read dataset
 dataset = load_diabetes()
 X = dataset.data
-Y = dataset.target
+y = dataset.target
 
 # Data description
 dataset_discription = dataset.DESCR
@@ -29,10 +29,10 @@ dataset_features = dataset.feature_names
 data = pd.DataFrame(data=X, columns=dataset_features)
 
 scaler = MinMaxScaler()
-Y = np.reshape(Y, (len(Y), 1))
-Y = scaler.fit_transform(Y)
+y = np.reshape(y, (len(y), 1))
+y = scaler.fit_transform(y)
 
-data["target"] = Y
+data["target"] = y
 
 
 # Check the data type of the columns and if there is any null value
@@ -46,11 +46,11 @@ data_corr = data.corr()
 # plt.show()
 
 X = data.iloc[:, 0:-1]
-Y = data.iloc[:, -1]
+y = data.iloc[:, -1]
 
 # Train test split
 X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.3, random_state=42
+    X, y, test_size=0.3, random_state=42
 )
 
 
