@@ -28,11 +28,11 @@ data.drop("id", axis=1, inplace=True)
 
 # Separate X and Y
 X = data.iloc[:, 1:]
-Y = data.iloc[:, 0]
+y = data.iloc[:, 0]
 
-# Check all Y data are String
-for index, x in Y.items():
-    if not isinstance(x, str):
+# Check all y data are String
+for index, i in y.items():
+    if not isinstance(i, str):
         print(f"There is a non-string data at index: {index}")
 
 
@@ -44,9 +44,9 @@ for col in X.columns:
 
 
 # Train and Test split
-def test_train_split_data(X, Y, testSize):
+def test_train_split_data(X, y, testSize):
     X_train, X_test, Y_train, Y_test = train_test_split(
-        X, Y, test_size=testSize, random_state=42, shuffle=True
+        X, y, test_size=testSize, random_state=42, shuffle=True
     )
 
     return X_train, X_test, Y_train, Y_test
@@ -65,8 +65,8 @@ def distribution_plot(Y_train, Y_test):
     plt.show()
 
 
-def train_models_and_evaluate(X, Y, balancing):
-    X_train, X_test, Y_train, Y_test = test_train_split_data(X, Y, 0.2)
+def train_models_and_evaluate(X, y, balancing):
+    X_train, X_test, Y_train, Y_test = test_train_split_data(X, y, 0.2)
 
     if balancing:
         X_train, Y_train = SMOTE().fit_resample(X_train, Y_train)
@@ -92,10 +92,10 @@ def train_models_and_evaluate(X, Y, balancing):
 
 
 # Imbalanced Dataset
-measure_values = train_models_and_evaluate(X, Y, False)
+measure_values = train_models_and_evaluate(X, y, False)
 
 # Balanced Dataset
-measure_values2 = train_models_and_evaluate(X, Y, True)
+measure_values2 = train_models_and_evaluate(X, y, True)
 
 
 # Merge the measures resulted from Imbalanced and Balanced dataset
