@@ -9,6 +9,7 @@ A few inages of four celebrities have been selected. Actually, we made an effort
 
 ## Results
 We tested the approach on a few new test and the results are as follows:
+
 ![Alt Text](images/result.png)
 
 
