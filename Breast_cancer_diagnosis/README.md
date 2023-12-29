@@ -21,6 +21,7 @@ Futhermore, the result of the project is comparing the evelaution measures in a 
 **Balanced dataset** : Neural Network model outperformed it's counterparts in ROC_AUC, Precision, and F1, but Neural Network and XGBoost model were euqual in Recall
 
 In conlusion, balancing has a positive effect on all the models in Recall measure.
+
 ![Alt Text](images/result.png)
 
 
