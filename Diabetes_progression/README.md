@@ -14,6 +14,7 @@ The result of the project is comparing the evelaution measures including **Mean 
 # Result
 **Linear regression** model outperformed it's counterparts in MSE and MAE. Also, feature **s1** has the most significant effect.
 
+
 ![Alt Text](images/regression_result.png)
 
 
