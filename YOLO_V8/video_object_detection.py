@@ -6,7 +6,7 @@ onnx_file_path = "./models/yolov8m.onnx"
 yolo_model = YOLOv8(onnx_file_path, conf_thres=0.5, iou_thres=0.5)
 
 
-test_video_path = "./images/test.mp4"
+test_video_path = "./images/video.mp4"
 source = cv.VideoCapture(test_video_path)
 
 width = int(source.get(cv.CAP_PROP_FRAME_WIDTH))
