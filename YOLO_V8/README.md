@@ -20,6 +20,7 @@ The project intends to use pre-trained model of **YOLOYv8** and **OpenCV** for o
 </video>
 </div>
 
+https://github.com/amiralisahraei/machine-learning/assets/63749202/9f40ea0e-7aba-4072-88af-817c31f1ccae
 
 
 ## Run The Project
